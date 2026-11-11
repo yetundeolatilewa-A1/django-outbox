@@ -12,6 +12,12 @@ class Endpoint(models.Model):
     secret = models.CharField(
         max_length=200, help_text="Shared secret used to sign every request (HMAC-SHA256)."
     )
+    previous_secret = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Optional old secret, still used to sign requests during a rotation. "
+        "Clear it once the receiver only accepts the new secret.",
+    )
     event_types = models.JSONField(
         default=list,
         blank=True,

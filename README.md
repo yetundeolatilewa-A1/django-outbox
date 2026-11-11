@@ -65,6 +65,9 @@ python manage.py run_outbox --once     # single pass, handy for cron
 
 ## What the receiver gets
 
+During a secret rotation, set the endpoint's old secret as `previous_secret`. The signature header then
+carries two `v1=` values, and `verify()` accepts either secret.
+
 `POST` with a JSON body and these headers:
 
 | Header | Meaning |

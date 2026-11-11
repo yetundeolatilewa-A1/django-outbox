@@ -10,6 +10,8 @@ Rough priority order. Each item should become a GitHub issue.
 - [ ] Release rows before the HTTP call (claim with a lease) so locks aren't held during network I/O
 
 ## Security
+- [ ] Block private / loopback / link-local addresses by default (SSRF protection), with an allowlist
+- [x] Secret rotation: accept two active secrets per endpoint
 - [x] Block private / loopback / link-local addresses by default (SSRF protection), with an allowlist
 - [ ] Secret rotation: accept two active secrets per endpoint
 - [ ] Encrypt endpoint secrets at rest

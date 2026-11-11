@@ -39,7 +39,9 @@ def _attempt(delivery, send, now):
         "User-Agent": "django-outbox/0.1",
         "X-Outbox-Id": str(delivery.message_id),
         "X-Outbox-Event": delivery.message.event_type,
-        "X-Outbox-Signature": sign(delivery.endpoint.secret, body),
+        "X-Outbox-Signature": sign(
+            delivery.endpoint.secret, body, previous_secret=delivery.endpoint.previous_secret
+        ),
     }
     delivery.attempts += 1
     try:
