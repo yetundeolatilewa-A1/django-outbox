@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python: "3.10"
+            django: "4.2.*"
+          - python: "3.12"
+            django: "5.2.*"
+          - python: "3.13"
+            django: "6.0.*"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: |
+          pip install -e ".[dev]"
+          pip install "Django==${{ matrix.django }}"
+      - name: Check for missing migrations
+        run: PYTHONPATH=. DJANGO_SETTINGS_MODULE=tests.settings python -m django makemigrations --check --dry-run
+      - name: Tests
+        run: python -m pytest -v
