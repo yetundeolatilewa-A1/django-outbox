@@ -11,7 +11,7 @@ Rough priority order. Each item should become a GitHub issue.
 
 ## Security
 - [ ] Block private / loopback / link-local addresses by default (SSRF protection), with an allowlist
-- [ ] Secret rotation: accept two active secrets per endpoint
+- [x] Secret rotation: accept two active secrets per endpoint
 - [ ] Encrypt endpoint secrets at rest
 
 ## Features

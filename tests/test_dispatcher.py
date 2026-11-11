@@ -112,3 +112,14 @@ def test_batch_size_limits_work(endpoint):
     for i in range(5):
         publish("order.paid", {"i": i})
     assert process_pending(send=FakeSend(200), batch_size=2).delivered == 2
+
+
+def test_signs_with_both_secrets_while_rotating(endpoint):
+    endpoint.previous_secret = "oldsecret"
+    endpoint.save()
+    publish("order.paid", {})
+    send = FakeSend(200)
+    process_pending(send=send)
+    _, body, headers, _ = send.calls[0]
+    assert verify("topsecret", headers["X-Outbox-Signature"], body)
+    assert verify("oldsecret", headers["X-Outbox-Signature"], body)
