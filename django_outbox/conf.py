@@ -14,6 +14,11 @@ DEFAULTS = {
     "TIMEOUT_SECONDS": 10,
     # Deliveries handled per dispatcher pass.
     "BATCH_SIZE": 50,
+    # SSRF protection: webhook URLs resolving to private, loopback, link-local or
+    # other non-public addresses are refused unless allowed here.
+    "ALLOW_PRIVATE_ADDRESSES": False,
+    # Hostnames that bypass the check, e.g. ["billing.internal.example.com"].
+    "ALLOWED_HOSTS": [],
 }
 
 
