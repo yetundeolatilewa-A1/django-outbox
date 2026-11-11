@@ -87,7 +87,9 @@ Any `2xx` response counts as delivered. Anything else (or a network error) is re
   timeout). Treat `X-Outbox-Id` as an idempotency key.
 - **No ordering guarantee** between messages, especially across retries.
 - The worker keeps row locks while it makes HTTP calls, so keep `TIMEOUT_SECONDS` and `BATCH_SIZE` modest.
-- Endpoint URLs are trusted (admin-managed). There is no private-network blocking yet; see the roadmap.
+- Webhook URLs that resolve to private, loopback or link-local addresses are blocked by default, and
+  redirects are never followed. Use `OUTBOX["ALLOW_PRIVATE_ADDRESSES"]` or `OUTBOX["ALLOWED_HOSTS"]`
+  to opt out. DNS rebinding is not fully covered; see `django_outbox/security.py`.
 
 ## Development
 
